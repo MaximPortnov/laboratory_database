@@ -87,8 +87,8 @@ def get_insert_code(code:str) -> str:
 @click.option('-d', '--drop', is_flag=True, help='выводит код удаление таблиц в консоль')
 @click.option('-c', '--create', is_flag=True, help='выводит код создания таблиц в консоль')
 @click.option('-i', '--insert', is_flag=True, help='выводит код вставки в таблицы в консоль')
-@click.option('--create-file-bd', is_flag=True, help="создает файл с кодом для создания базы данных")
-def main(main, drop, create, insert, dict, create_file):
+@click.option('--create-file', is_flag=True, help="создает файл с кодом для создания базы данных")
+def main(main, drop, create, insert, create_file):
     source = read_file("script.ipynb")    
     jsn = str_to_json(source)
     main_code = get_script_from_json(jsn)
@@ -103,8 +103,6 @@ def main(main, drop, create, insert, dict, create_file):
     if insert:
         s = get_insert_code(main_code)
         print(s)
-    if dict:
-        dict_data: dict = get_dict_data(main_code)
     if create_file:
         with open("CREATE_DATABASE.sql", 'w', encoding="UTF-8") as file:
             file.write("-- table\n")
